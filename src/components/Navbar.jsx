@@ -9,7 +9,7 @@ function Navbar() {
   return (
     <nav className="bg-white shadow-lg">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-20">
           <div className="flex">
             <Link to="/" className="flex items-center">
               <DocumentTextIcon className="h-8 w-8 text-primary-600" />
@@ -19,7 +19,7 @@ function Navbar() {
             </Link>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <Link
-                to="/"
+                to="/dashboard"
                 className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900"
               >
                 <HomeIcon className="h-5 w-5 mr-1" />

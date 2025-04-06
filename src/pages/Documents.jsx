@@ -16,22 +16,29 @@ function Documents() {
 
   const handleFileUpload = (files) => {
     files.forEach((file) => {
-      const reader = new FileReader();
-      console.log("reader", reader);
-      reader.onload = () => {
-        const newDoc = {
-          id: id,
-          name: file.name,
-          size: file.size,
-          type: file.type,
-          uploadDate: new Date().toISOString(),
-          content: reader.result,
+      if (
+        file.type.startsWith("application/") ||
+        file.type.startsWith("image/")
+      ) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const newDoc = {
+            id: id,
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            uploadDate: new Date().toISOString(),
+            content: reader.result,
+          };
+          dispatch(addDocument(newDoc));
+          toast.success(`${file.name} uploaded successfully!`);
         };
-        console.log("newDoc", newDoc);
-        dispatch(addDocument(newDoc));
-        toast.success(`${file.name} uploaded successfully!`);
-      };
-      reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+      } else {
+        toast.error(
+          `Unsupported file type. Only images and document are allowed`
+        );
+      }
     });
   };
 
@@ -42,7 +49,7 @@ function Documents() {
 
   const openModal = (document) => {
     setSelectedDocument(document);
-    setIsModalOpen(true);
+    setIsModalOpen(!isModalOpen);
   };
 
   return (
@@ -56,7 +63,11 @@ function Documents() {
         </div>
         <div className="bg-primary-50 rounded-full px-4 py-2">
           <span className="text-primary-700 font-medium">
-            {documents.length} Document{documents.length > 1 ? "s" : ""}
+            {!documents.length
+              ? null
+              : `${documents.length} Document${
+                  documents.length > 1 ? "s" : ""
+                }`}
           </span>
         </div>
       </div>
@@ -112,7 +123,7 @@ function Documents() {
 
       <DocumentModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => setIsModalOpen(!isModalOpen)}
         document={selectedDocument}
       />
     </div>

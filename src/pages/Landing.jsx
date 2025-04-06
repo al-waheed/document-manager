@@ -8,7 +8,6 @@ import {
 function Landing() {
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
       <div className="bg-gradient-to-r from-primary-600 to-primary-800 text-white">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-3xl mx-auto text-center">
@@ -30,7 +29,6 @@ function Landing() {
         </div>
       </div>
 
-      {/* Features Section */}
       <div className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
@@ -79,7 +77,6 @@ function Landing() {
         </div>
       </div>
 
-      {/* How It Works */}
       <div className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
@@ -120,7 +117,6 @@ function Landing() {
         </div>
       </div>
 
-      {/* CTA Section */}
       <div className="bg-primary-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
@@ -137,7 +133,6 @@ function Landing() {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="bg-gray-900 text-white">
         <div className="container mx-auto px-4 py-12">
           <div className="grid md:grid-cols-4 gap-8">
