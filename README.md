@@ -26,16 +26,16 @@ A powerful solution for managing documents and creating professional invoices �
 ### 🔹 Landing Page & Key Features
 ![Landing](./public/images/landing-page.png)
 
-### 🔹 Dashboard Overview
-![Document Dashboard](./public/images/document-dashboard-overview.png)
+### 🔹 Document Overview & Features
+![Dashboard](./public/images/document-dashboard-overview.png)
 
-### 🔹 Document Upload & Management
+### 🔹 Document List, Upload & Management
 ![Documents](./public/images/document-upload-mangement.png)
 
-### 🔹 Dashboard Overview
+### 🔹 Invoice Dashboard Overview
 ![Invoice Dashboard](./public/images/invoice.png)
 
-### 🔹 Document Upload & Management
+### 🔹 Invoice Input Details & Management
 ![Invoices](./public/images/invoice-input-details-management.png)
 
 ---
