@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
-import {
-  DocumentTextIcon,
-  DocumentIcon,
-  ArrowRightIcon,
-} from "@heroicons/react/24/outline";
+import { DocumentTextIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { howItsworks, keyFeatures } from "../utils/data";
 
 function Landing() {
   return (
@@ -33,46 +30,17 @@ function Landing() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <DocumentIcon className="h-12 w-12 text-primary-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">
-                Document Management
-              </h3>
-              <p className="text-gray-600">
-                Securely upload, store, and organize all your important
-                documents in one centralized location.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <DocumentTextIcon className="h-12 w-12 text-primary-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">
-                Professional Invoices
-              </h3>
-              <p className="text-gray-600">
-                Create and customize professional invoices with your company
-                branding, digital signatures, and more.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <svg
-                className="h-12 w-12 text-primary-600 mb-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                />
-              </svg>
-              <h3 className="text-xl font-semibold mb-2">Easy Export</h3>
-              <p className="text-gray-600">
-                Download your documents and invoices in PDF format for
-                professional sharing.
-              </p>
-            </div>
+            {keyFeatures.map((feature, index) => {
+              return (
+                <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
+                  <feature.icon className="h-12 w-12 text-primary-600 mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600">{feature.description}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -82,36 +50,19 @@ function Landing() {
           <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary-600">1</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2">Upload Documents</h3>
-                <p className="text-gray-600">
-                  Easily upload your documents using drag-and-drop or file
-                  selection.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary-600">2</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2">Create Invoices</h3>
-                <p className="text-gray-600">
-                  Generate professional invoices with your branding and digital
-                  signature.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary-600">3</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2">Download & Manage</h3>
-                <p className="text-gray-600">
-                  Organize and save your files, Download in PDF format for easy
-                  sharing.
-                </p>
-              </div>
+              {howItsworks.map((step, index) => {
+                return (
+                  <div key={index} className="text-center">
+                    <div className="bg-primary-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl font-bold text-primary-600">
+                        {index + 1}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                    <p className="text-gray-600">{step.description}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

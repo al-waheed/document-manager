@@ -1,10 +1,8 @@
 import Modal from "react-modal";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-
-Modal.setAppElement("#root");
+import { truncateFileName } from "../utils/truncateFileName";
 
 function DocumentModal({ isOpen, onClose, document }) {
-  if (!document) return null;
 
   const customStyles = {
     content: {
@@ -24,16 +22,6 @@ function DocumentModal({ isOpen, onClose, document }) {
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.75)",
     },
-  };
-
-  const truncateFileName = (filename, max = 50) => {
-    const parts = filename.split(".");
-    const ext = parts.length > 1 ? "." + parts.pop() : "";
-    const namewithoutExt = parts.join(".");
-
-    return namewithoutExt.length > max
-      ? namewithoutExt.slice(0, max) + "..." + ext
-      : filename;
   };
 
   return (
@@ -61,7 +49,7 @@ function DocumentModal({ isOpen, onClose, document }) {
               <img
                 src={document.content}
                 alt={document.name}
-                className="w-[60vw] h-auto rounded-md truncate"
+                className="w-[60vw] h-auto rounded-md"
               />
               <a
                 href={document.content}

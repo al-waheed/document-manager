@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { addDocument, removeDocument } from "../store/documentsSlice";
-import FileUpload from "../components/FileUpload";
+import FileUpload from "../utils/FileUpload";
 import DocumentModal from "../components/DocumentModal";
 import { TrashIcon, EyeIcon, DocumentIcon } from "@heroicons/react/24/outline";
 
