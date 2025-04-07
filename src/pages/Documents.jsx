@@ -36,7 +36,7 @@ function Documents() {
         reader.readAsDataURL(file);
       } else {
         toast.error(
-          `Unsupported file type. Only images and document are allowed`
+          `unsupported file type. Only images and document are allowed`
         );
       }
     });

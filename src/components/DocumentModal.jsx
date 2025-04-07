@@ -26,7 +26,7 @@ function DocumentModal({ isOpen, onClose, document }) {
     },
   };
 
-  const truncate = (filename, max = 50) => {
+  const truncateFileName = (filename, max = 50) => {
     const parts = filename.split(".");
     const ext = parts.length > 1 ? "." + parts.pop() : "";
     const namewithoutExt = parts.join(".");
@@ -46,7 +46,7 @@ function DocumentModal({ isOpen, onClose, document }) {
       <div className="bg-white rounded-lg shadow-xl">
         <div className="flex justify-between items-center p-4 border-b">
           <h2 className="text-xl font-semibold text-gray-900">
-            {truncate(document.name)}
+            {truncateFileName(document.name)}
           </h2>
           <button
             onClick={onClose}
