@@ -1,15 +1,23 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import {
   DocumentTextIcon,
   DocumentIcon,
   HomeIcon,
+  Bars3Icon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 
 function Navbar() {
+  const [showIcon, setShowIcon] = useState(true);
+  const toggleShowIcon = () => {
+    setShowIcon(!showIcon);
+  };
+
   return (
     <nav className="bg-white shadow-lg">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between h-20">
+        <div className="flex  items-center justify-between h-20">
           <div className="flex">
             <Link to="/" className="flex items-center">
               <DocumentTextIcon className="h-8 w-8 text-primary-600" />
@@ -39,6 +47,15 @@ function Navbar() {
                 <DocumentTextIcon className="h-5 w-5 mr-1" />
                 Invoices
               </Link>
+            </div>
+            <div className="sm:hidden flex ml-auto">
+              <button onClick={toggleShowIcon}>
+                {showIcon ? (
+                  <Bars3Icon className="h-8 w-8 text-primary-600" />
+                ) : (
+                  <XMarkIcon className="h-8 w-8 text-primary-600" />
+                )}
+              </button>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// import { v4 as uuidv4 } from 'uuid'
 import {
   addInvoice,
   updateInvoice,
@@ -22,6 +23,7 @@ function Invoices() {
   const [isCreating, setIsCreating] = useState(false);
   const [signatureRef, setSignatureRef] = useState(null);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
+  // const id = uuidv4()
   const [formData, setFormData] = useState({
     companyName: "",
     companyLogo: "",
@@ -33,7 +35,7 @@ function Invoices() {
     terms: "",
     signature: "",
     invoiceNumber: `INV-${Date.now().toString().slice(-6)}`,
-    dueDate: format(
+    issueDate: format(
       new Date().setDate(new Date().getDate() + 30),
       "yyyy-MM-dd"
     ),
@@ -59,7 +61,7 @@ function Invoices() {
       id: Date.now().toString(),
       ...formData,
       signature,
-      date: new Date().toISOString(),
+      issueDate: new Date().toISOString(),
       total: formData.items.reduce(
         (sum, item) => sum + item.quantity * item.price,
         0
@@ -77,7 +79,7 @@ function Invoices() {
       terms: "",
       signature: "",
       invoiceNumber: `INV-${Date.now().toString().slice(-6)}`,
-      dueDate: format(
+      issueDate: format(
         new Date().setDate(new Date().getDate() + 30),
         "yyyy-MM-dd"
       ),
@@ -127,8 +129,9 @@ function Invoices() {
                 </label>
                 <input
                   type="text"
+                  placeholder="Your Company Name"
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                  className="mt-1 block w-full h-10 pl-3 rounded-md border"
                   value={formData.companyName}
                   onChange={(e) =>
                     setFormData({ ...formData, companyName: e.target.value })
@@ -140,8 +143,9 @@ function Invoices() {
                   Company Logo URL
                 </label>
                 <input
-                  type="url"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                  type="file"
+                  placeholder="Your Company Logo"
+                  className="mt-1 block w-full h-10 pl-3 rounded-md border"
                   value={formData.companyLogo}
                   onChange={(e) =>
                     setFormData({ ...formData, companyLogo: e.target.value })
@@ -152,14 +156,15 @@ function Invoices() {
                 <label className="block text-sm font-medium text-gray-700">
                   Company Address
                 </label>
-                <textarea
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                  rows="2"
+                <input
+                  className="mt-1 block w-full h-10 pl-3 rounded-md border"
+                  required
+                  placeholder="Your Company Address"
                   value={formData.companyAddress}
                   onChange={(e) =>
                     setFormData({ ...formData, companyAddress: e.target.value })
                   }
-                ></textarea>
+                />
               </div>
             </div>
           </div>
@@ -176,7 +181,7 @@ function Invoices() {
                 <input
                   type="text"
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                  className="mt-1 pl-3 block w-full h-8 rounded-md border"
                   value={formData.invoiceNumber}
                   onChange={(e) =>
                     setFormData({ ...formData, invoiceNumber: e.target.value })
@@ -185,15 +190,15 @@ function Invoices() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Due Date
+                  Issue Date
                 </label>
                 <input
                   type="date"
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                  value={formData.dueDate}
+                  className="mt-1 pl-3 block w-full h-8 rounded-md border"
+                  value={formData.issueDate}
                   onChange={(e) =>
-                    setFormData({ ...formData, dueDate: e.target.value })
+                    setFormData({ ...formData, issueDate: e.target.value })
                   }
                 />
               </div>
@@ -211,8 +216,9 @@ function Invoices() {
                 </label>
                 <input
                   type="text"
+                  placeholder="Your Customer Name"
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                  className="mt-1 block w-full h-10 pl-3 rounded-md border"
                   value={formData.customerName}
                   onChange={(e) =>
                     setFormData({ ...formData, customerName: e.target.value })
@@ -225,8 +231,9 @@ function Invoices() {
                 </label>
                 <input
                   type="email"
+                  placeholder="Your Customer Email"
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                  className="mt-1 block w-full h-10 pl-3 rounded-md border"
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -251,14 +258,14 @@ function Invoices() {
             {formData.items.map((item, index) => (
               <div
                 key={index}
-                className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg"
+                className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-gray-100 rounded-lg"
               >
                 <div className="md:col-span-2">
                   <input
                     type="text"
                     placeholder="Item Description"
                     required
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    className="block w-full rounded-md h-8 pl-3 border"
                     value={item.description}
                     onChange={(e) =>
                       handleItemChange(index, "description", e.target.value)
@@ -271,7 +278,7 @@ function Invoices() {
                     placeholder="Quantity"
                     required
                     min="1"
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    className="block w-full h-8 pl-3 rounded-md border"
                     value={item.quantity}
                     onChange={(e) =>
                       handleItemChange(
@@ -289,7 +296,7 @@ function Invoices() {
                     required
                     min="0"
                     step="0.01"
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    className="block w-full h-8 pl-3 rounded-md border"
                     value={item.price}
                     onChange={(e) =>
                       handleItemChange(
@@ -310,7 +317,7 @@ function Invoices() {
                 Notes
               </label>
               <textarea
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="mt-1 block w-full pl-3 rounded-md border"
                 rows="3"
                 value={formData.notes}
                 onChange={(e) =>
@@ -323,7 +330,7 @@ function Invoices() {
                 Terms & Conditions
               </label>
               <textarea
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="mt-1 block w-full pl-3 rounded-md border"
                 rows="3"
                 value={formData.terms}
                 onChange={(e) =>
@@ -406,15 +413,9 @@ function Invoices() {
               </div>
               <div className="mt-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Date:</span>
+                  <span className="text-gray-500">Issue Date:</span>
                   <span className="font-medium">
-                    {format(new Date(invoice.date), "MMM dd, yyyy")}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm mt-1">
-                  <span className="text-gray-500">Due Date:</span>
-                  <span className="font-medium">
-                    {format(new Date(invoice.dueDate), "MMM dd, yyyy")}
+                    {format(new Date(invoice.issueDate), "MMM dd, yyyy")}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm mt-1">

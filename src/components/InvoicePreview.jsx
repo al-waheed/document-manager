@@ -68,10 +68,7 @@ function InvoicePreview({ invoice, onClose, isModalOpen }) {
                 {invoice.invoiceNumber}
               </p>
               <p className="text-gray-600">
-                Date: {format(new Date(invoice.date), "MMM dd, yyyy")}
-              </p>
-              <p className="text-gray-600">
-                Due Date: {format(new Date(invoice.dueDate), "MMM dd, yyyy")}
+                Issue Date: {format(new Date(invoice.issueDate), "MMM dd, yyyy")}
               </p>
             </div>
           </div>

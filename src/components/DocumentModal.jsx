@@ -3,6 +3,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { truncateFileName } from "../utils/truncateFileName";
 
 function DocumentModal({ isOpen, onClose, document }) {
+if (!document) return;
 
   const customStyles = {
     content: {
