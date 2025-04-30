@@ -14,32 +14,30 @@ function Documents() {
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleFileUpload = (files) => {
-    files.forEach((file) => {
-      if (
-        file.type.startsWith("application/") ||
-        file.type.startsWith("image/")
-      ) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const newDoc = {
-            id: id,
-            name: file.name,
-            size: file.size,
-            type: file.type,
-            uploadDate: new Date().toISOString(),
-            content: reader.result,
-          };
-          dispatch(addDocument(newDoc));
-          toast.success(`${file.name} uploaded successfully!`);
-        };
-        reader.readAsDataURL(file);
-      } else {
+  const handleFileOrImageUpload = (files) => {
+    for (const file of files) {
+      if (!file.type.match(/^(application|image)\//)) {
         toast.error(
-          `unsupported file type. Only images and document are allowed`
+          `Unsupported file type, only images and documents are allowed`
         );
+        return;
       }
-    });
+      const reader = new FileReader();
+      reader.onload = () => {
+        const newDoc = {
+          id: Date.now().toString(),
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          uploadDate: new Date().toISOString(),
+          content: reader.result,
+        };
+        dispatch(addDocument(newDoc));
+        toast.success(`${file.name} uploaded successfully!`);
+      };
+      reader.onerror = () => toast.error("Failed to read file");
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleDelete = (id) => {
@@ -73,7 +71,7 @@ function Documents() {
       </div>
 
       <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-        <FileUpload onFileUpload={handleFileUpload} />
+        <FileUpload onFileUpload={handleFileOrImageUpload} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

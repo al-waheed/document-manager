@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from "uuid";
 import {
   addInvoice,
   updateInvoice,
@@ -23,10 +23,10 @@ function Invoices() {
   const [isCreating, setIsCreating] = useState(false);
   const [signatureRef, setSignatureRef] = useState(null);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
-  // const id = uuidv4()
+  const id = uuidv4();
   const [formData, setFormData] = useState({
     companyName: "",
-    companyLogo: "",
+    companyLogo: null,
     companyAddress: "",
     customerName: "",
     email: "",
@@ -58,7 +58,7 @@ function Invoices() {
     e.preventDefault();
     const signature = signatureRef?.getTrimmedCanvas().toDataURL();
     const newInvoice = {
-      id: Date.now().toString(),
+      id: id,
       ...formData,
       signature,
       issueDate: new Date().toISOString(),
@@ -87,6 +87,21 @@ function Invoices() {
     signatureRef?.clear();
     setIsCreating(false);
     toast.success("Invoice created successfully!");
+  };
+
+  const handleUploadImage = (e) => {
+    const file = e.target.files[0];
+    if (!file || !file.type.match(/^image\//)) {
+      toast.error("Please upload a valid image file.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData({ ...formData, companyLogo: reader.result });
+      toast.success(`${file.name} uploaded successfully!`);
+    };
+    reader.onerror = () => toast.error("Failed to read file");
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -140,17 +155,39 @@ function Invoices() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Company Logo URL
+                  Company Logo
                 </label>
                 <input
                   type="file"
-                  placeholder="Your Company Logo"
-                  className="mt-1 block w-full h-10 pl-3 rounded-md border"
-                  value={formData.companyLogo}
-                  onChange={(e) =>
-                    setFormData({ ...formData, companyLogo: e.target.value })
-                  }
+                  id="companyLogoUpload"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleUploadImage}
                 />
+                <label
+                  htmlFor="companyLogoUpload"
+                  className="mt-1 block w-full h-10 px-3 py-2 rounded-md border border-gray-300 bg-white text-sm cursor-pointer hover:bg-gray-50"
+                >
+                  {formData.companyLogo ? "Change Image" : "Upload Image"}
+                </label>
+                {formData.companyLogo && (
+                  <div className="mt-2">
+                    <img
+                      src={formData.companyLogo}
+                      alt="Company Logo Preview"
+                      className="max-w-[200px] max-h-[200px] object-contain"
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setFormData({ ...formData, companyLogo: null })
+                      }
+                      className="text-red-600 text-sm hover:text-red-800"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
               </div>
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700">
@@ -314,7 +351,7 @@ function Invoices() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Notes
+                Notes (Optional)
               </label>
               <textarea
                 className="mt-1 block w-full pl-3 rounded-md border"
@@ -327,7 +364,7 @@ function Invoices() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Terms & Conditions
+                Terms & Conditions (Optional)
               </label>
               <textarea
                 className="mt-1 block w-full pl-3 rounded-md border"
@@ -342,7 +379,7 @@ function Invoices() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Signature
+              Signature (Optional)
             </label>
             <div className="mt-1 border rounded-md">
               <SignatureCanvas
