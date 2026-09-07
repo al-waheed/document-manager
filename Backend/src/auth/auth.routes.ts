@@ -5,9 +5,13 @@ import {
   googleCallback,
   facebookAuth,
   facebookCallback,
+  getCurrentUser,
 } from "./auth.controller.js";
+import { authenticate } from "./auth.middleware.js";
 
 const router = Router();
+
+router.get("/me", authenticate, getCurrentUser);
 
 router.get("/google", googleAuth);
 

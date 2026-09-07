@@ -21,6 +21,9 @@ function AuthCallback() {
 
       const user = {
         id: payload.userId,
+        name: payload.name,
+        email: payload.email,
+        avatar: payload.avatar,
       };
 
       dispatch(
