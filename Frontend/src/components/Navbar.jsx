@@ -21,7 +21,7 @@ function Navbar() {
   useEffect(() => {
     if (!token || (user?.name && user?.avatar)) return;
 
-    fetch("https://document-manager-aho8.onrender.com/api/documents/api/auth/me", {
+    fetch("https://document-manager-aho8.onrender.com/api/auth/me", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => {
